@@ -39,3 +39,10 @@ git_repository(
     remote = "https://github.com/boost-ext/di.git",
     tag = "v1.3.0"
 )
+
+git_repository(
+    name = "spdlog",
+    build_file = "@//third_party/spdlog:spdlog.BUILD",
+    remote = "https://github.com/gabime/spdlog.git",
+    tag = "v1.12.0"
+)

@@ -55,6 +55,11 @@ mkdir -p third_party/boost-di
 touch third_party/boost-di/boost-di.BUILD
 touch third_party/boost-di/BUILD
 
+# for spdlog
+mkdir -p third_party/spdlog
+touch third_party/spdlog/spdlog.BUILD
+touch third_party/spdlog/BUILD
+
 mkdir -p ioc
 touch ioc/main.cpp ioc/BUILD
 

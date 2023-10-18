@@ -6,6 +6,7 @@ cc_binary(
     srcs = glob(["*.cpp"]),
     deps = [
         "//third_party/boost-ext-di",
+        "//third_party/spdlog",
     ],
     copts = ["--std=c++23"],
 )
