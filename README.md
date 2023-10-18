@@ -65,3 +65,18 @@ touch ioc/main.cpp ioc/BUILD
 
 bazel run //ioc
 ```
+
+## web client
+```shell
+# workspace config 
+
+sudo apt-get install libcurl4-openssl-dev
+
+mkdir -p web-client
+touch web-client/main.cpp web-client/BUILD
+
+bazel build //web-client
+bazel run //web-client
+cd bazel-bin
+./home/xcheng4/web-service-dg-cpp/bazel-bin/web-client
+```

@@ -46,3 +46,13 @@ git_repository(
     remote = "https://github.com/gabime/spdlog.git",
     tag = "v1.12.0"
 )
+
+http_archive(
+    name = "hedron_make_cc_https_easy",
+    url = "https://github.com/hedronvision/bazel-make-cc-https-easy/archive/8df70a9d5eeb68c791412e097c4841e2083b2b47.tar.gz",
+    strip_prefix = "bazel-make-cc-https-easy-8df70a9d5eeb68c791412e097c4841e2083b2b47",
+)
+load("@hedron_make_cc_https_easy//:workspace_setup.bzl", "hedron_make_cc_https_easy")
+hedron_make_cc_https_easy()
+load("@hedron_make_cc_https_easy//:transitive_workspace_setup.bzl", "hedron_keep_cc_https_easy")
+hedron_keep_cc_https_easy()
