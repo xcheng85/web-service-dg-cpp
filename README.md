@@ -17,7 +17,6 @@ sudo apt update && sudo apt full-upgrade
 bazel --version
 ```
 
-
 ## vulkan
 ```shell
 touch WORKSPACE
@@ -39,10 +38,25 @@ mkdir -p third_party/glfw
 touch third_party/glfw/glfw.BUILD
 touch third_party/glfw/BUILD
 
-# for app1
+# for app1 (vulkan)
 mkdir -p app1
 touch app1/main.cpp app1/BUILD
 
 # run 
 bazel run //app1
+bazel query "//app1:*"
+bazel query --notool_deps --noimplicit_deps "deps(//app1:main.cpp)" --output graph
+```
+
+## ioc for web server
+```shell
+# for boost di
+mkdir -p third_party/boost-di
+touch third_party/boost-di/boost-di.BUILD
+touch third_party/boost-di/BUILD
+
+mkdir -p ioc
+touch ioc/main.cpp ioc/BUILD
+
+bazel run //ioc
 ```

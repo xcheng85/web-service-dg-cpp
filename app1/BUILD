@@ -9,4 +9,5 @@ cc_binary(
         "//third_party/glm",
         "@rules_vulkan//vulkan:vulkan_cc_library"
     ],
+    copts = ["--std=c++23"],
 )

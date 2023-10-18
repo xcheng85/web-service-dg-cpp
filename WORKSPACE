@@ -32,3 +32,10 @@ http_archive(
     strip_prefix = "glfw-{}".format(GLFW_VERSION),
     urls = ["https://github.com/glfw/glfw/archive/{}.zip".format(GLFW_VERSION)],
 )
+
+git_repository(
+    name = "boost-ext-di",
+    build_file = "@//third_party/boost-ext-di:boost-ext-di.BUILD",
+    remote = "https://github.com/boost-ext/di.git",
+    tag = "v1.3.0"
+)
