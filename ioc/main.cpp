@@ -1,146 +1,277 @@
-#include <boost/di.hpp>
 #include <memory>
 #include <vector>
 #include <string>
 #include <cassert>
 #include <format>
 #include <iostream>
+#include <boost/di.hpp>
+#include <spdlog/spdlog.h>
 
 namespace di = boost::di;
 using namespace std;
 
-class IConfig {
+class IConfig
+{
 public:
-  virtual ~IConfig() = default;
+    virtual ~IConfig() = default;
+};
+class AppConfig : public IConfig
+{
+public:
+    explicit AppConfig()
+    {
+        spdlog::info("--> AppConfig::AppConfig()");
+        spdlog::info("<-- AppConfig::AppConfig()");
+    }
 };
 
 // singleton
-class IDataBaseConnection {
+class IDataBaseConnection
+{
 public:
-  virtual ~IDataBaseConnection() = default;
+    virtual ~IDataBaseConnection() = default;
+};
+
+class RedisConnection : public IDataBaseConnection
+{
+public:
+    explicit RedisConnection()
+    {
+        spdlog::info("--> RedisConnection::RedisConnection()");
+        spdlog::info("<-- RedisConnection::RedisConnection()");
+    }
 };
 
 // singleton
-class IDistributedLockPool {
+class IDistributedLockPool
+{
 public:
-  virtual ~IDistributedLockPool() = default;
+    virtual ~IDistributedLockPool() = default;
+};
+
+class RedisLock : public IDistributedLockPool
+{
+public:
+    explicit RedisLock()
+    {
+        spdlog::info("--> RedisLock::RedisLock()");
+        spdlog::info("<-- RedisLock::RedisLock()");
+    }
 };
 
 // stateless, dynamic binding
 // provisioning
 // custom metrics collector
-// mrb 
+// mrb
 // ccm
-// vjs
-// voltron-client
-class IWebClient {
+// tokenExchange
+class IWebClient
+{
 public:
-  virtual ~IWebClient() = default;
+    virtual ~IWebClient() = default;
 };
 
-// service
-class ISessionService {
-
-}
-
-// entity
-struct SubscriptionSet {
- 
+class ProvisioningClient : public IWebClient
+{
+public:
+    explicit ProvisioningClient()
+    {
+        spdlog::info("--> ProvisioningClient::ProvisioningClient()");
+        spdlog::info("<-- ProvisioningClient::ProvisioningClient()");
+    }
 };
 
-// mux
+class CustomMetricsClient : public IWebClient
+{
+public:
+    explicit CustomMetricsClient()
+    {
+        spdlog::info("--> CustomMetricsClient::CustomMetricsClient()");
+        spdlog::info("<-- CustomMetricsClient::CustomMetricsClient()");
+    }
+};
+
+class TokenExchangeClient : public IWebClient
+{
+public:
+    explicit TokenExchangeClient()
+    {
+        spdlog::info("--> TokenExchangeClient::TokenExchangeClient()");
+        spdlog::info("<-- TokenExchangeClient::TokenExchangeClient()");
+    }
+};
+
+class MRBClient : public IWebClient
+{
+public:
+    explicit MRBClient()
+    {
+        spdlog::info("--> MRBClient::MRBClient()");
+        spdlog::info("<-- MRBClient::MRBClient()");
+    }
+};
+
+class CCMClient : public IWebClient
+{
+public:
+    explicit CCMClient()
+    {
+        spdlog::info("--> CCMClient::CCMClient()");
+        spdlog::info("<-- CCMClient::CCMClient()");
+    }
+};
+
+// service: business logic
+class IService
+{
+public:
+    virtual ~IService() = default;
+};
+
+class UserSubscriptionService : public IService
+{
+public:
+    explicit UserSubscriptionService()
+    {
+        spdlog::info("--> UserSubscriptionService::UserSubscriptionService()");
+        spdlog::info("<-- UserSubscriptionService::UserSubscriptionService()");
+    }
+};
+
+class BillingService : public IService
+{
+public:
+    explicit BillingService()
+    {
+        spdlog::info("--> BillingService::BillingService()");
+        spdlog::info("<-- BillingService::BillingService()");
+    }
+};
+
+class MetricsInstrumentationService : public IService
+{
+public:
+    explicit MetricsInstrumentationService()
+    {
+        spdlog::info("--> MetricsInstrumentationService::MetricsInstrumentationService()");
+        spdlog::info("<-- MetricsInstrumentationService::MetricsInstrumentationService()");
+    }
+};
+
+class TokenExchangeService : public IService
+{
+public:
+    explicit TokenExchangeService()
+    {
+        spdlog::info("--> TokenExchangeService::TokenExchangeService()");
+        spdlog::info("<-- TokenExchangeService::TokenExchangeService()");
+    }
+};
+
+// // entity
+// struct SubscriptionSet
+// {
+// };
+
+// middleware
+// 1. CheckSessionConfigMiddleware
+// 2. MetricsInstrumentSelector Middleware
+// 3. monitoring middleware
+// 4. sauth middleare
+class IMiddleware
+{
+public:
+    virtual ~IMiddleware() = default;
+};
+
+class CheckSessionConfigMiddleware : public IMiddleware
+{
+public:
+    explicit CheckSessionConfigMiddleware()
+    {
+        spdlog::info("--> CheckSessionConfigMiddleware::CheckSessionConfigMiddleware()");
+        spdlog::info("<-- CheckSessionConfigMiddleware::CheckSessionConfigMiddleware()");
+    }
+};
+
+class MetricsInstrumentSelectorMiddleware : public IMiddleware
+{
+public:
+    explicit MetricsInstrumentSelectorMiddleware()
+    {
+        spdlog::info("--> MetricsInstrumentSelectorMiddleware::MetricsInstrumentSelectorMiddleware()");
+        spdlog::info("<-- MetricsInstrumentSelectorMiddleware::MetricsInstrumentSelectorMiddleware()");
+    }
+};
+
+class MonitoringMiddleware : public IMiddleware
+{
+public:
+    explicit MonitoringMiddleware()
+    {
+        spdlog::info("--> MonitoringMiddleware::MonitoringMiddleware()");
+        spdlog::info("<-- MonitoringMiddleware::MonitoringMiddleware()");
+    }
+};
+
+class SAuthTokenMiddleware : public IMiddleware
+{
+public:
+    explicit SAuthTokenMiddleware()
+    {
+        spdlog::info("--> SAuthTokenMiddleware::SAuthTokenMiddleware()");
+        spdlog::info("<-- SAuthTokenMiddleware::SAuthTokenMiddleware()");
+    }
+};
+
+// domain driven
+// mux handler
 // metrics
 // session
 // scene-object
 // healthy check
-class IWebApi {
+class IMuxHandler
+{
+public:
+    virtual ~IMuxHandler() = default;
+};
 
+class MetricsHandler : public IMuxHandler
+{
+public:
+    explicit MetricsHandler()
+    {
+        spdlog::info("--> MetricsHandler::MetricsHandler()");
+        spdlog::info("<-- MetricsHandler::MetricsHandler()");
+    }
+};
+
+class SessionHandler : public IMuxHandler
+{
+public:
+    explicit SessionHandler()
+    {
+        spdlog::info("--> SessionHandler::SessionHandler()");
+        spdlog::info("<-- SessionHandler::SessionHandler()");
+    }
+};
+
+class K8sProbe : public IMuxHandler
+{
+public:
+    explicit K8sProbe()
+    {
+        spdlog::info("--> K8sProbe::K8sProbe()");
+        spdlog::info("<-- K8sProbe::K8sProbe()");
+    }
+
+    ~K8sProbe()
+    {
+    }
+};
+
+int main()
+{
+    const auto injector = di::make_injector();
+    auto app = injector.create<K8sProbe>();
 }
-
-// middleware
-class IMiddleware {
-    
-}
-
-// class room
-// {
-// };
-// class speaker
-// {
-// };
-
-// struct name : std::string
-// {
-//     using std::string::string;
-// };
-
-// class attendees
-// {
-// public:
-//     explicit attendees(const std::vector<name> &names)
-//     {
-//         cout << names.size() << endl;
-//         assert(3u == names.size());
-//         cout << names[0] << endl;
-//         cout << names[1] << endl;
-//         cout << names[2] << endl;
-//         // assert("dallocation" == names[0]);
-//         // assert("performancequery" == names[1]);
-//         // assert("hostqueryreset" == names[2]);
-//     }
-// };
-
-// class cppcon_talk
-// {
-// public:
-//     cppcon_talk(room &&, std::unique_ptr<speaker>, attendees &) {}
-// };
-
-// struct i1 : std::string
-// {
-//     virtual ~i1() noexcept = default;
-//     virtual void dummy1() = 0;
-// };
-// struct impl : i1
-// {
-//     void dummy1() override {}
-// };
-// struct impl1 : i1
-// {
-//     void dummy1() override {}
-// };
-// //->
-
-// // int main() {
-// //   // clang-format off
-// //   auto injector = di::make_injector(
-// //     di::bind<i1*[]>().to<impl, impl1>()
-// //   );
-// //   // clang-format on
-
-// //   auto v = injector.create<std::vector<std::unique_ptr<i1>>>();
-// //   assert(2 == v.size());
-// //   assert(dynamic_cast<impl*>(v[0].get()));
-// //   assert(dynamic_cast<impl1*>(v[1].get()));
-// // }
-
-// int main()
-// {
-//     // const auto injector = di::make_injector(
-//     //     di::bind<name[]>.to({name{"ddddddallocation"},
-//     //                          name{"ancequery"},
-//     //                          name{"reset"}}));
-//     // injector.create<cppcon_talk>();
-
-//     // clang-format off
-//   std::initializer_list<std::string> il ={"VK_KHR_dedicated_allocation", "ancequery", "fffffffff"};
-//   auto injector = di::make_injector(
-//     di::bind<std::string[]>().to(il) // or di::bind<int*[]>.to(il)
-//   );
-//     // clang-format on
-
-//     auto names = injector.create<std::vector<std::string>>();
-//     cout << names[0] << endl;
-//     cout << names[1] << endl;
-//     cout << names[2] << endl;
-// }
