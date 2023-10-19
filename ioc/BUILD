@@ -7,6 +7,11 @@ cc_binary(
     deps = [
         "//third_party/boost-ext-di",
         "//third_party/spdlog",
+        "//ioc/service:service",
+        "//ioc/lock:lock",
+        "//ioc/middleware:middleware",
+        "//ioc/mux:mux",
+        "//ioc/config:config",
     ],
     copts = ["--std=c++23"],
 )

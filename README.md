@@ -65,6 +65,10 @@ touch ioc/main.cpp ioc/BUILD
 
 bazel build //ioc
 bazel run //ioc
+
+bazel query --notool_deps --noimplicit_deps "deps(ioc)" --output graph
+
+bazel query --noimplicit_deps "deps(ioc)"
 ```
 
 ## web client
