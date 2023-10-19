@@ -63,6 +63,7 @@ touch third_party/spdlog/BUILD
 mkdir -p ioc
 touch ioc/main.cpp ioc/BUILD
 
+bazel build //ioc
 bazel run //ioc
 ```
 

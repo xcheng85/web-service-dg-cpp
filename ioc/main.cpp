@@ -168,6 +168,24 @@ public:
     }
 };
 
+class AuthService : public IService
+{
+public:
+    explicit AuthService()
+    {
+        spdlog::info("--> AuthService::AuthService()");
+        spdlog::info("<-- AuthService::AuthService()");
+    }
+
+    void GetBearerToken()
+    {
+    }
+
+    void GetUserId()
+    {
+    }
+};
+
 // // entity
 // struct SubscriptionSet
 // {
@@ -246,13 +264,41 @@ public:
     }
 };
 
+auto AUTH_SERVICE = [] {};
+auto USER_SUBSCRIPTION_SERVICE = [] {};
+
 class SessionHandler : public IMuxHandler
 {
 public:
-    explicit SessionHandler()
+    //  (named = my_name) std::unique_ptr<i1> up
+    BOOST_DI_INJECT(SessionHandler,
+                    (named = AUTH_SERVICE) std::shared_ptr<IService> auth,
+                    (named = USER_SUBSCRIPTION_SERVICE) std::shared_ptr<IService> usersubs)
     {
         spdlog::info("--> SessionHandler::SessionHandler()");
+        assert(dynamic_cast<AuthService *>(auth.get()));
+        assert(dynamic_cast<UserSubscriptionService *>(usersubs.get()));
         spdlog::info("<-- SessionHandler::SessionHandler()");
+    }
+
+    void RequestSession()
+    {
+    }
+
+    void ReleaseSession()
+    {
+    }
+
+    void TrackSessionActivity()
+    {
+    }
+
+    void TrackRendererActivity()
+    {
+    }
+
+    void AddMetricDataPoint()
+    {
     }
 };
 
@@ -272,6 +318,9 @@ public:
 
 int main()
 {
-    const auto injector = di::make_injector();
-    auto app = injector.create<K8sProbe>();
+    const auto injector = di::make_injector(
+        di::bind<class IService>().named(AUTH_SERVICE).to<AuthService>(),
+        di::bind<class IService>().named(USER_SUBSCRIPTION_SERVICE).to<UserSubscriptionService>());
+    auto k8sProbeMuxHandler = injector.create<K8sProbe>();
+    auto d = injector.create<SessionHandler>();
 }

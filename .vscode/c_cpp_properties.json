@@ -4,7 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/bazel-web-service-dg-cpp/external/cpr/include"
+                "${workspaceFolder}/bazel-web-service-dg-cpp/external/cpr/include",
+                "${workspaceFolder}/bazel-web-service-dg-cpp/external/spdlog/include",
+                "${workspaceFolder}/bazel-web-service-dg-cpp/external/boost-ext-di/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
